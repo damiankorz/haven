@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Home Page</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/main.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>H/\\/VEN</h1>
+        </header>
+        <div class="nav_bar">
+            <a class="nav_links" href="/users/{{ request.session.logged_id }}">Home</a><a class="nav_links" href="/posts">Posts</a><a class="nav_links" href="/users/community">Community</a><a class="nav_links" href="/users/{{ request.session.logged_id }}/settings">Settings</a><a class="nav_links" href="/logout">Logout</a>
+        </div>
+        <h2> {{ user.handle }} </h2>
+        <img src="{% static 'users/img/controller.png' %}" alt="Controller Icon" height=45 widht=45>
+        <h3>Full Name: {{ user.first_name }} {{ user.last_name }}</h3>
+        <h3>Email: {{ user.email }}</h3>
+        <ul>
+        {% if messages %}
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+        {% if user.id == request.session.logged_id %}
+        <h4>Add a Post</h4>
+        <form action="/posts/process" method="post">
+        {% csrf_token %}
+            <input type="text" name="title" placeholder="Post Title">
+            <textarea name="post_content" cols="65" rows="5" placeholder="Enter content here"></textarea>
+            <input id="post_submit" type="submit" value="Submit Post">
+        </form>
+        {% endif %}
+        <div class="post_div">
+        {% for post in posts %}
+            <h5>{{ post.title }}</h5>
+            <h6>Posted on: {{ post.created_at }}</h6>
+            <p>{{ post.content }}</p>
+            <div class="comment_div">
+            {% for comment in comments %}
+                {% if comment.post_id == post.id %}
+                    <h5>{{ comment.user.handle }} commented: </h5>
+                    <p>{{ comment.content }}</p>
+                    <h6>{{ comment.created_at }}</h6>
+                    {% if comment.user_id == request.session.logged_id %}
+                        <a href="/posts/{{ post.user_id }}/comment/{{ comment.id }}"> Delete Comment</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </div>
+            {% if post.user.id != request.session.logged_id %}
+            <form action="/posts/{{ post.user.id }}/{{ post.id }}/comment" method="post">
+            {% csrf_token %}
+                <textarea name="comment_content" cols="95" rows="3" placeholder="Enter comment here"></textarea>
+                <input type="submit" value="Submit Comment">
+            </form>
+            {% endif %}
+        {% endfor %}
+        </div>
+        <footer>
+            <img src="{% static 'users/img/pc.png' %}" alt="PC Logo" width=25 height=25>
+            <img src="{% static 'users/img/xbox.png' %}" alt="Xbox Logo" width=25 height=25>
+            <img src="{% static 'users/img/playstation.png' %}" alt="Playstation Logo" width=25 height=25>
+            <img src="{% static 'users/img/nintendo.png' %}" alt="Nintendo Logo" width=75 height=25>
+        </footer>
+    </div>
+</body>
+</html>

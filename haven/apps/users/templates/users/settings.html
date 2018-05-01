@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Account Settings</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/main.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>H/\\/VEN</h1>
+        </header>
+        <div class="nav_bar">
+            <a class="nav_links" href="/users/{{ request.session.logged_id }}">Home</a><a class="nav_links" href="/posts">Posts</a><a class="nav_links" href="/users/community">Community</a><a class="nav_links" href="/users/{{ request.session.logged_id }}/settings">Settings</a><a class="nav_links" href="/logout">Logout</a>            
+        </div>
+        <h2>Update Account Settings</h2>
+        <ul class="messages">
+        {% if messages %}
+            {% for message in messages %}
+            <li> {{ message }}</li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+        <h4>Update Email Address</h4>
+        <form action="/users/update_email" method="post">
+            <input class="settings_input" type="text" name="email" placeholder="Email">
+            <input type="submit" value="Update Email">
+        {% csrf_token %}
+        </form>
+        <h4>Update Password</h4>
+        <form action="/users/update_password" method="post">
+        {% csrf_token %}
+            <input class="settings_input" type="password" name="password" placeholder="Password">
+            <input class="settings_input" type="password" name="confirm_password" placeholder="Confirm Password">
+            <input type="submit" value="Update Password">
+        </form>
+        <footer>
+            <img src="{% static 'users/img/pc.png' %}" alt="PC Logo" width=25 height=25>
+            <img src="{% static 'users/img/xbox.png' %}" alt="Xbox Logo" width=25 height=25>
+            <img src="{% static 'users/img/playstation.png' %}" alt="Playstation Logo" width=25 height=25>
+            <img src="{% static 'users/img/nintendo.png' %}" alt="Nintendo Logo" width=75 height=25>
+        </footer>
+    </div>
+</body>
+</html>

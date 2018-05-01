@@ -1,0 +1,39 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    background: linear-gradient(to bottom right, blue, #3cb7f7);
+    background-repeat: none;
+    background-attachment: fixed;
+}
+    div {
+        width: 970px;
+        margin: 0px auto;
+    }
+            h1 {
+                text-align: center;
+                color: white;
+                font-size: 72pt;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+                padding: 100px;
+            }
+            h2 {
+                text-align: center;
+                color: white;
+                margin-bottom: 25px;
+            }
+            a {
+                margin-right: 10px;
+                background-color: white;
+                padding: 10px;
+                color: black;
+                text-decoration: none;
+                border-radius: 2px;
+                font-weight: bold;
+                box-shadow: 2px 2px 5px navy;
+            }
+        footer {
+            text-align: center;
+        }
+        

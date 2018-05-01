@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Main</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href=" {% static 'users/css/styles.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>H/\\/EN</h1>
+        </header>
+        <ul>
+        {% if messages %}
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+        <form action="/login/process" method="post">
+        {% csrf_token %}
+            <input type="text" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Login">
+        </form>
+        <a href="/register">Don't have an account? Click here to register</a>
+        <footer>
+            <img src="{% static 'users/img/pc.png' %}" alt="PC Logo" width=25 height=25>
+            <img src="{% static 'users/img/xbox.png' %}" alt="Xbox Logo" width=25 height=25>
+            <img src="{% static 'users/img/playstation.png' %}" alt="Playstation Logo" width=25 height=25>
+            <img src="{% static 'users/img/nintendo.png' %}" alt="Nintendo Logo" width=75 height=25>
+        </footer>
+    </div>
+</body>
+</html>
